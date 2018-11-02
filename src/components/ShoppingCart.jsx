@@ -99,6 +99,8 @@ class ShoppingCart extends Component {
         let item = this.getItemFromId(id, this.state.items);
         const updatedItem = _.assign(item, item.changes);
         item = _.assign(updatedItem, {changes: {}, isEditing: false});
+
+        // We could perform an API request here with the updated item data
         this.setState({
             items: this.state.items
         });

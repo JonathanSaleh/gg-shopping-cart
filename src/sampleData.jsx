@@ -1,6 +1,14 @@
 // Sample data  to emulate a line item source. Make changes here to see how the cart renders for different item types
 const ITEMS = [
     {
+        name: 'Badge Item',
+        price: 219,
+        quantity: 1,
+        type: 'badge',
+        id: 2,
+        fulfiller: 'smash.gg'
+    },
+    {
         id: 1,
         name: 'Clothing Item',
         price: 3000,
@@ -8,14 +16,6 @@ const ITEMS = [
         type: 'clothing',
         imageUrl: 'https://images.smash.gg/images/tournament/10823/image-b4ddaf7c53ad2503c2330edda6831d20.jpg',
         size: 'md',
-        fulfiller: 'smash.gg'
-    },
-    {
-        name: 'Badge Item',
-        price: 219,
-        quantity: 1,
-        type: 'badge',
-        id: 2,
         fulfiller: 'smash.gg'
     },
     {

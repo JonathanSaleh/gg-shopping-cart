@@ -6,7 +6,7 @@ import EditForm from './EditForm';
 const DetailsCell = function(lineItem) {
     const itemId = lineItem.get('id');
 
-    // Only render the Editing form if the line item is being edited
+    // Only renders the Editing form if the line item is being edited
     const EditingContent = (lineItem) => {
         if(lineItem.get('isEditing')) {
             return EditForm(lineItem, this.handleCancelClick, this.handleSaveEdits, this.handleUpdateField);
@@ -35,7 +35,7 @@ const DetailsCell = function(lineItem) {
                     <PlainButton type='destructive' onClick={() => this.handleRemoveClick(itemId)}>Remove</PlainButton>
                 </SpacedGroup>
                 <span className='detail-text color-gray'>Fulfilled by {lineItem.get('fulfiller')}</span>
-                <div>{EditingContent(lineItem)}</div>
+                {EditingContent(lineItem)}
             </SpacedGroup>
         </td>
     )

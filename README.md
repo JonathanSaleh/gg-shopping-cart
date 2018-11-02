@@ -2,7 +2,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Sample Data
 
-The sample data is exported from src/sampleData.jsx
+The sample data is exported from `src/sampleData.jsx`
 
 Modifications to sample data can be done in that file.
 

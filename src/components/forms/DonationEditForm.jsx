@@ -10,7 +10,7 @@ class DonationEditForm extends Component {
         return (
             <SpacedGroup>
                 <GridCell size={1}>
-                    <Input label='($) Amount' type='number' value={priceValue / 100} onChange={(e) => this.props.handleUpdateField(lineItem.get('id'), 'price', e, (value) => (value * 100))} />
+                    <Input label='($) Amount' type='number' step={0.01} value={(priceValue / 100)} onChange={(e) => this.props.handleUpdateField(lineItem.get('id'), 'price', e, (value) => (value * 100))} />
                 </GridCell>
                 <EditFormSubmit lineItem={lineItem} handleSaveEdits={this.props.handleSaveEdits} handleCancelClick={this.props.handleCancelClick} />
             </SpacedGroup>
