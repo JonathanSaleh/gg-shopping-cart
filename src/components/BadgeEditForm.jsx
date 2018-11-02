@@ -6,8 +6,8 @@ class BadgeEditForm extends Component {
   render() {
         return (
             <span>
-                <QuantityInput quantity={this.props.item.quantity} />
-                <EditFormSubmit lineItem={this.props.item} handleCancelClick={this.props.handleCancelClick} />
+                <QuantityInput lineItem={this.props.lineItem} handleUpdateField={this.props.handleUpdateField} />
+                <EditFormSubmit lineItem={this.props.lineItem} handleSaveEdits={this.props.handleSaveEdits} handleCancelClick={this.props.handleCancelClick} />
             </span>
         );
     }

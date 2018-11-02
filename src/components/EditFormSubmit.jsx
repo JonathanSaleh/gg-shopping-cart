@@ -6,7 +6,7 @@ class EditFormSubmit extends Component {
         const lineItem = this.props.lineItem;
         return (
             <div>
-                <Button type='primary' label='Save'></Button>
+                <Button type='primary' label='Save' onClick={() => this.props.handleSaveEdits(lineItem.get('id'))}></Button>
                 <Button type='secondary' label='Cancel' onClick={() => this.props.handleCancelClick(lineItem.get('id'))}></Button>
             </div>
         );

@@ -1,10 +1,21 @@
-import React, { Component } from 'react';
-import { PlainButton } from '@smashgg/gg-components';
+import React from 'react';
 
-const CostCell = lineItem => (
-    <td>
-        {lineItem.get('price') <= 0 ? <span>FREE</span> : <span>{'$' + (lineItem.get('price') * lineItem.get('quantity')) / 100}</span>}
-    </td>
-);
+const CostCell = lineItem => {
+    const CostCellContent = lineItem => {
+        const price = lineItem.get('price');
+        if (price <= 0) {
+            return <span className='body-text'>Free</span>
+        } else {
+            const cost = (price * lineItem.get('quantity')) / 100
+            return <span>{'$' + cost}</span>
+        }
+    };
+
+    return (
+        <td key={lineItem.get('id') + 'cost'}>
+            {CostCellContent(lineItem)}
+        </td>
+    )
+};
 
 export default CostCell;

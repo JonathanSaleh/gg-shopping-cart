@@ -4,6 +4,7 @@ import ImageCell from './ImageCell';
 import DetailsCell from './DetailsCell';
 import CostCell from './CostCell';
 import Immutable, { List, fromJS } from 'immutable';
+import _ from 'lodash'
 
 class ShoppingCart extends Component {
     constructor(props) {
@@ -14,12 +15,16 @@ class ShoppingCart extends Component {
         this.handleEditClick = this.handleEditClick.bind(this);
         this.handleCancelClick = this.handleCancelClick.bind(this);
         this.handleRemoveClick = this.handleRemoveClick.bind(this);
+        this.handleSaveEdits = this.handleSaveEdits.bind(this);
+        this.handleUpdateField = this.handleUpdateField.bind(this);
         this.detailsCell = DetailsCell.bind(this);
     }
 
     handleCancelClick(id) {
         const itemIndex = this.state.items.findIndex(item => (item.id == id));
-        this.state.items[itemIndex].isEditing = false;
+        const item = this.state.items[itemIndex]
+        item.isEditing = false;
+        item.changes = {}
         this.setState({
             items: this.state.items
         });
@@ -39,6 +44,35 @@ class ShoppingCart extends Component {
             items: this.state.items
         });
     };
+
+    handleUpdateField(id, attributeName, event, onSet) {
+        console.log(id);
+        console.log(attributeName);
+        console.log(event.target.value);
+        const newValue = onSet ? onSet(event.target.value) : event.target.value;
+        console.log(newValue);
+        const itemIndex = this.state.items.findIndex(item => (item.id == id));
+        const item = this.state.items[itemIndex];
+        if(!item.changes) {
+            item.changes = {}
+        };
+        item.changes[attributeName] = newValue;
+        this.setState({
+            items: this.state.items
+        });
+    }
+
+    handleSaveEdits(id) {
+        const itemIndex = this.state.items.findIndex(item => (item.id == id));
+        const item = this.state.items[itemIndex];
+        const updatedItem = _.assign(item, item.changes);
+        updatedItem.changes = {};
+        updatedItem.isEditing = false;
+        this.state.items[itemIndex] = updatedItem;
+        this.setState({
+            items: this.state.items
+        })
+    }
 
     render() {
         const lineItems = Immutable.fromJS(this.state.items);
