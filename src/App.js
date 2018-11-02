@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ShoppingCart from './components/ShoppingCart';
 import '@smashgg/gg-components/dist/main.css';
+import './App.css'
 
 const ITEMS = [
     {name: 'Clothing Item', price: 3000, quantity: 2, type: 'clothing', id: 1, imageUrl: 'https://images.smash.gg/images/tournament/10823/image-b4ddaf7c53ad2503c2330edda6831d20.jpg', size: 'md', fulfiller: 'smash.gg'},

@@ -17,7 +17,7 @@ class ShoppingCart extends Component {
         this.handleRemoveClick = this.handleRemoveClick.bind(this);
         this.handleSaveEdits = this.handleSaveEdits.bind(this);
         this.handleUpdateField = this.handleUpdateField.bind(this);
-        this.detailsCell = DetailsCell.bind(this);
+        this.DetailsCell = DetailsCell.bind(this);
     }
 
     handleCancelClick(id) {
@@ -46,11 +46,7 @@ class ShoppingCart extends Component {
     };
 
     handleUpdateField(id, attributeName, event, onSet) {
-        console.log(id);
-        console.log(attributeName);
-        console.log(event.target.value);
         const newValue = onSet ? onSet(event.target.value) : event.target.value;
-        console.log(newValue);
         const itemIndex = this.state.items.findIndex(item => (item.id == id));
         const item = this.state.items[itemIndex];
         if(!item.changes) {
@@ -78,7 +74,7 @@ class ShoppingCart extends Component {
         const lineItems = Immutable.fromJS(this.state.items);
         const colMeta = Immutable.fromJS([
             {cell: ImageCell},
-            {cell: this.detailsCell},
+            {cell: this.DetailsCell},
             {cell: CostCell}
         ]);
 

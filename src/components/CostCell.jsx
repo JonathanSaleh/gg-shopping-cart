@@ -4,7 +4,7 @@ const CostCell = lineItem => {
     const CostCellContent = lineItem => {
         const price = lineItem.get('price');
         if (price <= 0) {
-            return <span className='body-text'>Free</span>
+            return <span className='money-green'>Free</span>
         } else {
             const cost = (price * lineItem.get('quantity')) / 100
             return <span>{'$' + cost}</span>
