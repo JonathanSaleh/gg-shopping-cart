@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Table, ImageIcon, PlainButton } from '@smashgg/gg-components';
+import Immutable from 'immutable';
+import _ from 'lodash';
+import { Table } from '@smashgg/gg-components';
 import ImageCell from './ImageCell';
 import DetailsCell from './DetailsCell';
 import CostCell from './CostCell';
-import Immutable, { List, fromJS } from 'immutable';
-import _ from 'lodash'
 
+/**
+* The main shopping cart component. Handles all state for the cart
+* Takes a list of line items as a prop
+*/
 class ShoppingCart extends Component {
     constructor(props) {
         super(props);
@@ -20,9 +24,42 @@ class ShoppingCart extends Component {
         this.DetailsCell = DetailsCell.bind(this);
     }
 
+    /**
+      * Helper function to grab the object with the provided id out of the list of items
+      * @params {integer} id - The item id we want to get
+      * @params {Array} id - The list of items
+     */
+    getItemFromId(id, items) {
+        return _.find(items, {'id': id});
+    }
+
+    /**
+    * Updates the attribute field on the item that matches the provided id, calling onSet on the data
+    * @params {integer} id - The listItem id we are updating
+    * @params {string} attributeName - The key of the attribute we are updating
+    * @params {Event} event - The click event
+    * @params (function) onSet - Function to mutate the attribute value on set
+    */
+    handleUpdateField(id, attributeName, event, onSet) {
+        const item = this.getItemFromId(id, this.state.items);
+        const newValue = onSet ? onSet(event.target.value) : event.target.value;
+
+        if(!item.changes) {
+            item.changes = {}
+        }
+
+        item.changes[attributeName] = newValue;
+        this.setState({
+            items: this.state.items
+        });
+    }
+
+    /**
+      * Closes the edit form for the item with the provided id
+      * @params {integer} id - The item id that we are removing the form for
+     */
     handleCancelClick(id) {
-        const itemIndex = this.state.items.findIndex(item => (item.id == id));
-        const item = this.state.items[itemIndex]
+        const item = this.getItemFromId(id, this.state.items);
         item.isEditing = false;
         item.changes = {}
         this.setState({
@@ -30,44 +67,41 @@ class ShoppingCart extends Component {
         });
     };
 
+    /**
+      * Opens the edit form for the item with the provided id
+      * @params {integer} id - The item id that we are opening the form for
+     */
     handleEditClick(id) {
-        const itemIndex = this.state.items.findIndex(item => (item.id == id));
-        this.state.items[itemIndex].isEditing = true;
+        const item = this.getItemFromId(id, this.state.items);
+        item.isEditing = true;
         this.setState({
             items: this.state.items
         });
     };
 
+    /**
+      * Removes the item with the provided id from the cart
+      * @params {integer} id - The item id that we are removing
+     */
     handleRemoveClick(id) {
-        this.state.items = this.state.items.filter(item => (item.id != id));
+        const newItems = this.state.items;
+        _.remove(newItems, {'id': id});
         this.setState({
-            items: this.state.items
+            items: newItems
         });
     };
 
-    handleUpdateField(id, attributeName, event, onSet) {
-        const newValue = onSet ? onSet(event.target.value) : event.target.value;
-        const itemIndex = this.state.items.findIndex(item => (item.id == id));
-        const item = this.state.items[itemIndex];
-        if(!item.changes) {
-            item.changes = {}
-        };
-        item.changes[attributeName] = newValue;
+    /**
+      * Applies the edits to the line item and closes the form
+      * @params {integer} id - The item id that we are saving edits on
+     */
+    handleSaveEdits(id) {
+        let item = this.getItemFromId(id, this.state.items);
+        const updatedItem = _.assign(item, item.changes);
+        item = _.assign(updatedItem, {changes: {}, isEditing: false});
         this.setState({
             items: this.state.items
         });
-    }
-
-    handleSaveEdits(id) {
-        const itemIndex = this.state.items.findIndex(item => (item.id == id));
-        const item = this.state.items[itemIndex];
-        const updatedItem = _.assign(item, item.changes);
-        updatedItem.changes = {};
-        updatedItem.isEditing = false;
-        this.state.items[itemIndex] = updatedItem;
-        this.setState({
-            items: this.state.items
-        })
     }
 
     render() {
@@ -79,7 +113,7 @@ class ShoppingCart extends Component {
         ]);
 
         return (
-            <Table columnMeta={colMeta} data={lineItems} />
+            <Table columnMeta={colMeta} data={lineItems} emptyState={<div>Your shopping cart is empty.</div>} />
         );
     }
 }
