@@ -12,12 +12,12 @@ class ClothingEditForm extends Component {
         const sizeValue = changes && changes.get('size') ? changes.get('size') : lineItem.get('size');
         const tagValue = changes && changes.get('customTag') ? changes.get('customTag') : lineItem.get('customTag');
         return (
-            <div>
+            <div className='form-input'>
                 <SpacedGroup direction='horizontal' size='lg'>
                     <GridCell size={1}>
                         <QuantityInput lineItem={lineItem} handleUpdateField={this.props.handleUpdateField} />
                     </GridCell>
-                    <GridCell size={4}>
+                    <GridCell size={2}>
                         <div>
                             <Select name='size' label='Size' options={sizeOptions} value={sizeValue} onChange={(e) => this.props.handleUpdateField(lineItem.get('id'), 'size', e)}></Select>
                         </div>

@@ -6,7 +6,7 @@ import EditFormSubmit from './EditFormSubmit';
 class BadgeEditForm extends Component {
     render() {
         return (
-            <SpacedGroup>
+            <SpacedGroup className='form-input'>
                 <GridCell size={1}>
                     <QuantityInput lineItem={this.props.lineItem} handleUpdateField={this.props.handleUpdateField} />
                 </GridCell>
