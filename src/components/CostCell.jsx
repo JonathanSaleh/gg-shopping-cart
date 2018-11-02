@@ -14,7 +14,7 @@ const CostCell = lineItem => {
     };
 
     return (
-        <td key={lineItem.get('id') + '-cost'} align='right'>
+        <td key={lineItem.get('id') + '-cost'} align='right' className='cost-cell'>
             {CostCellContent(lineItem)}
         </td>
     )

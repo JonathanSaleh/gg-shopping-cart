@@ -6,6 +6,6 @@
     color: gray
 }
 
-.image-cell {
-    width: '5%'
+.image-cell .cost-cell {
+    width: 5%
 }
