@@ -16,10 +16,15 @@ const DetailsCell = function(lineItem) {
     // Only renders the size if there is a size on the line item
     const SizeContent = lineItem => {
         const size = lineItem.get('size');
+        const sizeLabels = {
+            'sm': 'Small',
+            'md': 'Medium',
+            'lg': 'Large'
+        };
         if(size) {
             const rows = [];
             rows.push(<span className='ui color-gray'>·</span>);
-            rows.push(<span className='ui color-gray'>{size}</span>);
+            rows.push(<span className='ui color-gray'>{sizeLabels[size]}</span>);
             return rows;
         }
     };
